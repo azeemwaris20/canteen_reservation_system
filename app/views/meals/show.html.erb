@@ -1,0 +1,90 @@
+<style>
+.meal-details-container {
+  display: flex;
+  align-items: flex-start; /* Align content to the top */
+  gap: 20px; /* Space between the image and details */
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.meal-image-wrapper {
+  flex: 1; /* Take 1/3rd of the space */
+  max-width: 300px; /* Limit the image size */
+}
+
+.meal-detail-image {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.meal-detail-content {
+  flex: 2; /* Take 2/3rds of the space */
+}
+
+.meal-detail-name {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.meal-detail-description {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.meal-detail-price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #007bff;
+  margin-bottom: 10px;
+}
+
+.badge {
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.badge-success {
+  color: green;
+  border: 1px solid green;
+}
+
+.badge-danger {
+  color: red;
+  border: 1px solid red;
+}
+</style>
+
+<div class="meal-details-container">
+  <% if @meal.image.attached? %>
+    <div class="meal-image-wrapper">
+      <%= image_tag @meal.image, alt: @meal.name, class: "meal-detail-image" %>
+    </div>
+  <% end %>
+
+  <div class="meal-detail-content">
+    <h1 class="meal-detail-name"><%= @meal.name %></h1>
+    <p class="meal-detail-description"><%= @meal.description %></p>
+    <p class="meal-detail-price">Price: £<%= number_to_currency(@meal.price, unit: "") %></p>
+    <% if @meal.availability %>
+      <p class="meal-detail-availability badge badge-success">Available</p>
+
+      <%= form_with url: reservations_path, method: :post, local: true do |f| %>
+        <div class="form-group">
+          <%= label_tag :timeslot, "Select a Timeslot" %>
+          <%= select_tag :timeslot, options_for_select(["12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM"]), class: "form-control" %>
+        </div>
+        <%= hidden_field_tag :meal_id, @meal.id %>
+        <%= submit_tag "Reserve Now", class: "btn btn-primary mt-3" %>
+      <% end %>
+
+    <% else %>
+      <p class="meal-detail-availability badge badge-danger">Unavailable</p>
+    <% end %>
+  </div>
+</div>

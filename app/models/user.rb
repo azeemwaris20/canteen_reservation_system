@@ -8,6 +8,8 @@ class User < ApplicationRecord
 
   before_validation :set_default_role, on: :create
 
+  has_many :reservations
+
   def set_default_role
     self.role ||= :student
   end

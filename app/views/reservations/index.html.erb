@@ -1,0 +1,84 @@
+<h1>Your Reservations</h1>
+
+<style>
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table th, table td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.badge {
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.badge-success {
+  color: green;
+  border: 1px solid green;
+}
+
+.badge-danger {
+  color: red;
+  border: 1px solid red;
+}
+
+.btn-sm {
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+table td svg {
+  width: 100px;
+  height: 100px;
+}
+</style>
+<% if @reservations.any? %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>QR Code</th>
+        <th>Meal</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Timeslot</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @reservations.each do |reservation| %>
+        <tr>
+          <td>
+            <%= link_to reservation_path(reservation) do %>
+            <% qr_code_svg = RQRCode::QRCode.new(reservation_url(reservation)).as_svg(
+              color: "000", 
+              shape_rendering: "crispEdges", 
+              module_size: 4, 
+              standalone: true
+            ) %>
+            <%= raw qr_code_svg %>
+            <% end %>
+          </td>
+          <td><%= reservation.meal.name %></td>
+          <td><%= truncate(reservation.meal.description, length: 50) %></td>
+          <td>£<%= number_to_currency(reservation.meal.price, unit: "") %></td>
+          <td><%= reservation.timeslot %></td>
+          <td>
+            <% if reservation.meal.availability %>
+              <span class="badge badge-success">Available</span>
+            <% else %>
+              <span class="badge badge-danger">Unavailable</span>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>You have no reservations. <%= link_to 'Browse meals', meals_path, class: 'btn btn-primary' %></p>
+<% end %>

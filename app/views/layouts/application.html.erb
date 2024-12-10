@@ -28,6 +28,23 @@
         <div class="container text-center">
           <img src="<%= asset_path('uel.png') %>" alt="Logo" class="logo" />
         </div>
+        <% if current_user&.student? %>
+          <h1>Welcome, <%= current_user.first_name %>!</h1>
+          <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: '' %>
+          </br>
+          <button 
+            class=""
+            onclick="window.location.href='<%= student_root_path %>'">
+            Meals
+          </button>
+          <button
+            class=""
+            onclick="window.location.href='<%= reservations_path(current_user.id) %>'">
+            Reservations
+          </button>
+          </br>
+        <% end %>
+
         <%= yield %>
       </div>
     </div>

@@ -1,0 +1,73 @@
+<style>
+.meal-card-link {
+  text-decoration: none;
+  color: inherit; /* Ensure link inherits text colors */
+}
+
+.meal-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+}
+
+.meal-card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+}
+
+.meal-image {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.meal-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.meal-description {
+  font-size: 1rem;
+  color: #555;
+}
+
+.meal-price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #007bff;
+}
+
+.badge {
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.badge-success {
+  color: green;
+  border: 1px solid green;
+}
+
+.badge-danger {
+  color: red;
+  border: 1px solid red;
+}
+</style>
+
+<%= link_to meal_path(meal), class: "meal-card-link" do %>
+  <div class="meal-card">
+    <% if meal.image.attached? %>
+      <%= image_tag meal.image, alt: meal.name, class: "meal-image" %>
+    <% end %>
+    <h3 class="meal-name"><%= meal.name %></h3>
+    <p class="meal-description"><%= meal.description %></p>
+    <p class="meal-price">£<%= number_to_currency(meal.price, unit: "") %></p>
+    <% if meal.availability %>
+      <span class="meal-availability badge badge-success">Available</span>
+    <% else %>
+      <span class="meal-availability badge badge-danger">Unavailable</span>
+    <% end %>
+  </div>
+<%end%>

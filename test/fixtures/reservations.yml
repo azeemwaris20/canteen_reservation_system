@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  meal: one
+  user: one
+  timeslot: MyString
+
+two:
+  meal: two
+  user: two
+  timeslot: MyString

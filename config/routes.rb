@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   authenticated :user, ->(u) { u.student? } do
     root to: 'students#dashboard', as: :student_root
+    resources :meals, only: [:show]
+    resources :reservations, only: [:create, :index, :show]
   end
 
   authenticated :user, ->(u) { u.canteenstaff? } do

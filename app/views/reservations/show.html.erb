@@ -1,0 +1,28 @@
+<div class="container">
+
+  <div class="reservation-details">
+    <!-- QR Code at the Top -->
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <% qr_code_svg = RQRCode::QRCode.new(reservation_url(@reservation)).as_svg(
+          color: "000", 
+          shape_rendering: "crispEdges", 
+          module_size: 6,  # Larger QR code size
+          standalone: true
+        ) %>
+        <div class="qr-code-container">
+          <%= raw qr_code_svg %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <h3><%= @reservation.meal.name %></h3>
+        <p><strong>Meal Description:</strong> <%= @reservation.meal.description %></p>
+        <p><strong>Timeslot:</strong> <%= @reservation.timeslot %></p>
+        <p><strong>Price:</strong> £<%= '%.2f' % @reservation.meal.price %></p>
+      </div>
+    </div>
+  </div>
+</div>
