@@ -62,3 +62,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'dotenv-rails'
+gem 'devise'
+gem 'activeadmin'
+gem 'bootstrap', '~> 5.2.0'
+gem 'popper_js', '~> 2.11.6'

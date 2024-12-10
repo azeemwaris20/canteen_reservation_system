@@ -1,0 +1,33 @@
+<div class="container text-center">
+
+<% if user_signed_in? %>
+  <!-- Buttons -->
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+      <button 
+        class=""
+        onclick="window.location.href='<%= destroy_user_session_path %>'">
+        Logout
+      </button>
+    </div>
+  </div>
+<% else %>
+  <!-- Buttons -->
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+      <button 
+        class=""
+        onclick="window.location.href='<%= new_user_session_path %>'">
+        Login
+      </button>
+    </div>
+    <div class="col-md-4">
+      <button 
+        class=""
+        onclick="window.location.href='<%= new_user_registration_path %>'">
+        Sign Up
+      </button>
+    </div>
+  </div>
+<% end %>
+</div>
