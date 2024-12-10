@@ -1,8 +1,6 @@
 ActiveAdmin.register Meal do
-  # Permitting parameters for form submission
   permit_params :name, :description, :price, :image, :availability
 
-  # Index page configuration
   index do
     selectable_column
     id_column
@@ -14,7 +12,6 @@ ActiveAdmin.register Meal do
     actions
   end
 
-  # Show page configuration
   show do |meal|
     attributes_table do
       row :name
@@ -33,7 +30,6 @@ ActiveAdmin.register Meal do
     end
   end
 
-  # Form configuration
   form do |f|
     f.inputs "Meal Details" do
       f.input :name
